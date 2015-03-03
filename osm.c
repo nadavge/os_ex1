@@ -19,7 +19,7 @@ inline unsigned int roundUp(unsigned int num, unsigned int divider)
     unsigned int remainderConj = divider - remainder;
     return num + (remainder ? remainderConj : 0);
 }
-double timeDiffInNano(struct timeval tv1, struct timeval tv2, unsigned int iterations);
+double timeDiffInNano(timeval tv1, timeval tv2, unsigned int iterations);
 /*
     @brief returns a timeval struct
     @return current timeval
@@ -131,7 +131,7 @@ double osm_syscall_time(unsigned int osm_iterations)
     @param tv2 end
     @return tv2 - tv1 in nanoseconds.
 */
-double timeDiffInNano(struct timeval tv1, struct timeval tv2, unsigned int iterations)
+double timeDiffInNano(timeval tv1, timeval tv2, unsigned int iterations)
 {
     double secondsDiff = (tv2.tv_sec - tv1.tv_sec);
     double microDiff = (tv2.tv_usec - tv1.tv_usec);
