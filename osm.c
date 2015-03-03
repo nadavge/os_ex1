@@ -12,7 +12,7 @@
 // OSM_NULLSYSCALL
 
 typedef struct timeval timeval;
-void emptyFunction();
+volatile int tempCounter = 1337;
 inline unsigned int roundUp(unsigned int num, unsigned int divider)
 {
     unsigned int remainder = num % divider;
@@ -44,10 +44,11 @@ int osm_init()
 /*
     @brief empty function
 */
-void emptyFunction()
+void __attribute__((noinline)) emptyFunction()
 {
 
 }
+
 /* Time measurement function for an empty function call.
    returns time in nano-seconds upon success,
    and -1 upon failure.
@@ -156,7 +157,7 @@ double osm_operation_time(unsigned int osm_iterations)
 
     timeval start = getTime();
 
-    register volatile int a = 1337;
+    register /*volatile*/ int a = 1337;
 
     while(iterations_left > 0)
     {
