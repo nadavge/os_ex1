@@ -76,8 +76,8 @@ double osm_function_time(unsigned int osm_iterations)
         emptyFunction();
         emptyFunction();
         emptyFunction();
-
-        iterations_left -= REPETITIONS;
+        
+	iterations_left -= REPETITIONS;
     }
 
     timeval end = getTime();
@@ -132,8 +132,8 @@ double osm_syscall_time(unsigned int osm_iterations)
 */
 double timeDiffInNano(struct timeval tv1, struct timeval tv2, unsigned int iterations)
 {
-    double secondsDiff = ((double) tv2.tv_sec - tv1.tv_sec);
-    double microDiff = ((double) tv2.tv_usec - tv1.tv_usec);
+    double secondsDiff = (tv2.tv_sec - tv1.tv_sec);
+    double microDiff = (tv2.tv_usec - tv1.tv_usec);
     double nanoDiff = secondsDiff*SECONDS_TO_NANO + microDiff*MICROSECONDS_TO_NANO;
     return nanoDiff / iterations;
 }
@@ -157,18 +157,7 @@ double osm_operation_time(unsigned int osm_iterations)
     timeval start = getTime();
     while(iterations_left > 0)
     {
-        9999999+9999999;
-        9999999+9999999;
-        9999999+9999999;
-        9999999+9999999;
-        9999999+9999999;
-        9999999+9999999;
-        9999999+9999999;
-        9999999+9999999;
-        9999999+9999999;
-        9999999+9999999;
-
-        iterations_left -= REPETITIONS;
+	iterations_left -= REPETITIONS;
     }
 
     timeval end = getTime();
@@ -194,7 +183,7 @@ timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
         result.machineName[0] = 0;
     }
     result.numberOfIterations = osm_iterations > 0 ? osm_iterations : DEFAULT_ITERATIONS;
-    result.instructionTimeNanoSecond = osm_syscall_time(result.numberOfIterations);
+    result.instructionTimeNanoSecond = osm_operation_time(result.numberOfIterations);
     result.functionTimeNanoSecond = osm_function_time(result.numberOfIterations);
     result.trapTimeNanoSecond = osm_syscall_time(result.numberOfIterations);
     result.functionInstructionRatio = result.functionTimeNanoSecond / result.instructionTimeNanoSecond;
@@ -207,7 +196,7 @@ timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
 
 int main()
 {
-    timeMeasurmentStructure ts = measureTimes(0);
+    timeMeasurmentStructure ts = measureTimes(500000);
     printf("inst: %lf\n", ts.instructionTimeNanoSecond);
     printf("trap: %lf\n", ts.trapTimeNanoSecond);
     printf("func: %lf\n", ts.functionTimeNanoSecond);
