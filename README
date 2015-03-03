@@ -1,0 +1,23 @@
+nadavg, ddanon
+206338865, 313364861
+
+FILES:
+osm.c -- The implementation of question 3
+
+REMARKS:
+
+ANSWERS:
+
+=================
+Question 1.
+=================
+First, it creates a directory in the same folder called "os", with 0755 permissions.
+Then, it creates a subfolder in "os" called "2015".
+Then, it opens a handler to a file "info" with permissions to write only, if it doesn't exist it creates it,
+and truncates it if it exists ("w"), and receives a file descriptor from the OS.
+It then calls fstat with the given file descriptor, as a regular file with 0644 permissions. it's empty.
+We allocate 2^16 bytes of memory. We write to the file a lot of spaces (110), then the username
+	of the current logged in user, and then the parameter given to the program.
+It then de-allocates the memory allocated, and deletes the file and all directories created.
+(os/2015/info, os/2015/, os/),
+and then calls exit with status 0 (success).
