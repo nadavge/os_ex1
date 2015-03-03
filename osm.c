@@ -26,6 +26,12 @@ int osm_init()
    */
 double osm_function_time(unsigned int osm_iterations);
 
+inline unsigned int roundUp(unsigned int num, unsigned int divider)
+{
+    unsigned int remainder = num % divider;
+    unsigned int remainderConj = divider - remainder;
+    return num + (remainder ? remainderConj : 0);
+}
 /* Time measurement function for an empty trap into the operating system.
    returns time in nano-seconds upon success,
    and -1 upon failure.
@@ -34,7 +40,9 @@ double osm_function_time(unsigned int osm_iterations);
    */
 double osm_syscall_time(unsigned int osm_iterations)
 {
+
     timeval start = getTime();
+    osm_iterations = roundUp(osm_iterations, REPETITIONS);
     unsigned iterations_left = osm_iterations;
     while(iterations_left > 0)
     {
@@ -52,32 +60,9 @@ double osm_syscall_time(unsigned int osm_iterations)
         iterations_left -= REPETITIONS;
     }
 
-    switch(iterations_left)
-    {
-        case 9:
-            OSM_NULLSYSCALL;
-        case 8:
-            OSM_NULLSYSCALL;
-        case 7:
-            OSM_NULLSYSCALL;
-        case 6:
-            OSM_NULLSYSCALL;
-        case 5:
-            OSM_NULLSYSCALL;
-        case 4:
-            OSM_NULLSYSCALL;
-        case 3:
-            OSM_NULLSYSCALL;
-        case 2:
-            OSM_NULLSYSCALL;
-        case 1:
-            OSM_NULLSYSCALL;
-    }
     timeval end = getTime();
 
     return timeDiffInNano(start, end, osm_iterations);
-
-
 }
 /*
     @brief returns a timeval struct
