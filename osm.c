@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/time.h>
+#include <stdio.h>
 #include "osm.h"
 #define DEFAULT_ITERATIONS 50000
 #define MICROSECONDS_TO_NANO 1000000
