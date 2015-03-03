@@ -61,6 +61,7 @@ timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
     result.functionInstructionRatio = result.functionTimeNanoSecond / result.instructionTimeNanoSecond;
     result.trapInstructionRatio = result.trapTimeNanoSecond / result.instructionTimeNanoSecond;
 
+    return result;
 
 
 }
