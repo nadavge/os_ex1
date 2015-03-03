@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "osm.h"
 #define DEFAULT_ITERATIONS 50000
-#define MICROSECONDS_TO_NANO 1000000
+#define MICROSECONDS_TO_NANO 1000
 #define SECONDS_TO_NANO 1000000000
 #define REPETITIONS 10
 // timeMeasurmentStructure
@@ -134,7 +134,7 @@ double timeDiffInNano(struct timeval tv1, struct timeval tv2, unsigned int itera
 {
     double secondsDiff = (tv2.tv_sec - tv1.tv_sec);
     double microDiff = (tv2.tv_usec - tv1.tv_usec);
-    double nanoDiff = secondsDiff*SECONDS_TO_NANO + microDiff*MICROSECONDS_TO_NANO;
+    double nanoDiff = (secondsDiff*SECONDS_TO_NANO) + (microDiff*MICROSECONDS_TO_NANO);
     return nanoDiff / iterations;
 }
 
@@ -212,7 +212,7 @@ int main()
 {
     timeMeasurmentStructure ts = measureTimes(500000);
     printf("inst: %lf\n", ts.instructionTimeNanoSecond);
-    printf("trap: %lf\n", ts.trapTimeNanoSecond);
     printf("func: %lf\n", ts.functionTimeNanoSecond);
+    printf("trap: %lf\n", ts.trapTimeNanoSecond);
     return 0;
 }
