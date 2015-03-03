@@ -2,6 +2,7 @@
 #include <unistd.h>
 
 #define DEFAULT_ITERATIONS 50000
+#define MICRO 1000000
 // timeMeasurmentStructure
 // OSM_NULLSYSCALL
 
@@ -27,7 +28,33 @@ double osm_function_time(unsigned int osm_iterations);
    Zero iterations number is invalid.
 
    */
-double osm_syscall_time(unsigned int osm_iterations);
+double osm_syscall_time(unsigned int osm_iterations)
+    double
+{
+
+
+
+}
+/*
+    @brief returns a timeval struct
+    @return current timeval
+*/
+struct timeval getTime()
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return tv;
+}
+/*
+    @brief Calculate the time difference between 2 timevalues (tv2 - tv1);
+    @param tv1 first timeval
+    @param tv2 second timeval
+    @return tv2 - tv1 in microseconds.
+*/
+long calculateTimeDiff(struct timeval tv1, struct timeval tv2)
+{
+    return (tv2.tv_sec - tv1.tv_sec)*MICRO + (tv2.tv_usec - tv1.tv_usec);
+}
 
 
 /* Time measurement function for a simple arithmetic operation.
@@ -35,7 +62,10 @@ double osm_syscall_time(unsigned int osm_iterations);
    and -1 upon failure.
    Zero iterations number is invalid.
    */
-double osm_operation_time(unsigned int osm_iterations);
+double osm_operation_time(unsigned int osm_iterations)
+{
+
+}
 /*
 typedef struct {
 	char machineName[HOST_NAME_MAX];
