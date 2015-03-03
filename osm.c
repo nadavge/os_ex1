@@ -1,6 +1,8 @@
-#include "osm.h"
-#include <unistd.h>
 
+#include <unistd.h>
+#include <time.h>
+#include <sys/time.h>
+#include "osm.h"
 #define DEFAULT_ITERATIONS 50000
 #define MICROSECONDS_TO_NANO 1000000
 #define SECONDS_TO_NANO 1000000000
@@ -9,7 +11,24 @@
 // OSM_NULLSYSCALL
 
 typedef struct timeval timeval;
-
+void emptyFunction();
+inline unsigned int roundUp(unsigned int num, unsigned int divider)
+{
+    unsigned int remainder = num % divider;
+    unsigned int remainderConj = divider - remainder;
+    return num + (remainder ? remainderConj : 0);
+}
+double timeDiffInNano(struct timeval tv1, struct timeval tv2, unsigned int iterations);
+/*
+    @brief returns a timeval struct
+    @return current timeval
+*/
+timeval getTime()
+{
+    timeval tv;
+    gettimeofday(&tv, NULL);
+    return tv;
+}
 /* Initialization function that the user must call
  * before running any other library function.
  * Returns 0 upon success and -1 on failure.
@@ -17,21 +36,55 @@ typedef struct timeval timeval;
 int osm_init()
 {
 
+
+    return 0;
 }
 
+/*
+    @brief empty function
+*/
+void emptyFunction()
+{
+
+}
 /* Time measurement function for an empty function call.
    returns time in nano-seconds upon success,
    and -1 upon failure.
    Zero iterations number is invalid.
    */
-double osm_function_time(unsigned int osm_iterations);
-
-inline unsigned int roundUp(unsigned int num, unsigned int divider)
+double osm_function_time(unsigned int osm_iterations)
 {
-    unsigned int remainder = num % divider;
-    unsigned int remainderConj = divider - remainder;
-    return num + (remainder ? remainderConj : 0);
+    if (osm_iterations == 0)
+    {
+        return -1;
+    }
+
+    osm_iterations = roundUp(osm_iterations, REPETITIONS);
+    unsigned iterations_left = osm_iterations;
+
+    timeval start = getTime();
+    while(iterations_left > 0)
+    {
+        emptyFunction();
+        emptyFunction();
+        emptyFunction();
+        emptyFunction();
+        emptyFunction();
+        emptyFunction();
+        emptyFunction();
+        emptyFunction();
+        emptyFunction();
+        emptyFunction();
+
+        iterations_left -= REPETITIONS;
+    }
+
+    timeval end = getTime();
+
+    return timeDiffInNano(start, end, osm_iterations);
 }
+
+
 /* Time measurement function for an empty trap into the operating system.
    returns time in nano-seconds upon success,
    and -1 upon failure.
@@ -40,10 +93,15 @@ inline unsigned int roundUp(unsigned int num, unsigned int divider)
    */
 double osm_syscall_time(unsigned int osm_iterations)
 {
+    if (osm_iterations == 0)
+    {
+        return -1;
+    }
 
-    timeval start = getTime();
     osm_iterations = roundUp(osm_iterations, REPETITIONS);
     unsigned iterations_left = osm_iterations;
+
+    timeval start = getTime();
     while(iterations_left > 0)
     {
         OSM_NULLSYSCALL;
@@ -64,16 +122,7 @@ double osm_syscall_time(unsigned int osm_iterations)
 
     return timeDiffInNano(start, end, osm_iterations);
 }
-/*
-    @brief returns a timeval struct
-    @return current timeval
-*/
-timeval getTime()
-{
-    timeval tv;
-    gettimeofday(&tv, NULL);
-    return tv;
-}
+
 /*
     @brief Calculate average time of the operations
     @param tv1 start
@@ -96,7 +145,34 @@ double timeDiffInNano(struct timeval tv1, struct timeval tv2, unsigned int itera
    */
 double osm_operation_time(unsigned int osm_iterations)
 {
+    if (osm_iterations == 0)
+    {
+        return -1;
+    }
 
+    osm_iterations = roundUp(osm_iterations, REPETITIONS);
+    unsigned iterations_left = osm_iterations;
+
+    timeval start = getTime();
+    while(iterations_left > 0)
+    {
+        9999999+9999999;
+        9999999+9999999;
+        9999999+9999999;
+        9999999+9999999;
+        9999999+9999999;
+        9999999+9999999;
+        9999999+9999999;
+        9999999+9999999;
+        9999999+9999999;
+        9999999+9999999;
+
+        iterations_left -= REPETITIONS;
+    }
+
+    timeval end = getTime();
+
+    return timeDiffInNano(start, end, osm_iterations);
 }
 /*
 typedef struct {
@@ -111,10 +187,10 @@ typedef struct {
 */
 timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
 {
-    timeMeasurmentStructure result = {0};
+    timeMeasurmentStructure result = {{0}};
     if(! gethostname(result.machineName, HOST_NAME_MAX))
     {
-        result.machineName[0] = NULL;
+        result.machineName[0] = 0;
     }
     result.numberOfIterations = osm_iterations > 0 ? osm_iterations : DEFAULT_ITERATIONS;
     result.instructionTimeNanoSecond = osm_syscall_time(result.numberOfIterations);
