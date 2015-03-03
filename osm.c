@@ -155,8 +155,22 @@ double osm_operation_time(unsigned int osm_iterations)
     unsigned iterations_left = osm_iterations;
 
     timeval start = getTime();
+
+    register volatile int a = 1337;
+
     while(iterations_left > 0)
     {
+	a += 1;
+	a -= 1;
+	a += 1;
+	a -= 1;
+	a += 1;
+	a -= 1;
+	a += 1;
+	a -= 1;
+	a += 1;
+	a -= 1;
+
 	iterations_left -= REPETITIONS;
     }
 
