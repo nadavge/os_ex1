@@ -1,4 +1,3 @@
-
 #include <unistd.h>
 #include <time.h>
 #include <sys/time.h>
@@ -8,52 +7,69 @@
 #define MICROSECONDS_TO_NANO 1000
 #define SECONDS_TO_NANO 1000000000
 #define REPETITIONS 10
-// timeMeasurmentStructure
-// OSM_NULLSYSCALL
 
 typedef struct timeval timeval;
 volatile int tempCounter = 1337;
-inline unsigned int roundUp(unsigned int num, unsigned int divider)
+
+/**
+* @brief Rounds up a number to be a multiple of another number
+*
+* @param num the number to round up
+* @param base the number to serve as the base
+*
+* @return 
+*/
+inline unsigned int roundUp(unsigned int num, unsigned int base)
 {
-    unsigned int remainder = num % divider;
-    unsigned int remainderConj = divider - remainder;
+    unsigned int remainder = num % base;
+    unsigned int remainderConj = base - remainder;
     return num + (remainder ? remainderConj : 0);
 }
-double timeDiffInNano(timeval tv1, timeval tv2, unsigned int iterations);
-/*
-    @brief returns a timeval struct
-    @return current timeval
+
+/**
+* @brief Returns the average iteration time based on start time, stop time and iteration count
+*
+* @param tv1 the first timevalue
+* @param tv2 the second timevalue
+* @param iterations the number of iterations to average on
+*
+* @return the average iteration time
 */
-timeval getTime()
+double timeDiffInNano(timeval tv1, timeval tv2, unsigned int iterations)
+{
+    double secondsDiff = (tv2.tv_sec - tv1.tv_sec);
+    double microDiff = (tv2.tv_usec - tv1.tv_usec);
+    double nanoDiff = (secondsDiff*SECONDS_TO_NANO) + (microDiff*MICROSECONDS_TO_NANO);
+    return nanoDiff/iterations;
+}
+
+/*
+*    @brief returns a timeval struct of the current time
+*    @return current timeval
+*/
+inline timeval getTime()
 {
     timeval tv;
     gettimeofday(&tv, NULL);
     return tv;
 }
+
 /* Initialization function that the user must call
  * before running any other library function.
  * Returns 0 upon success and -1 on failure.
  */
 int osm_init()
 {
-
-
     return 0;
 }
 
 /*
-    @brief empty function
+*    @brief empty function
 */
 void __attribute__((noinline)) emptyFunction()
 {
-
 }
 
-/* Time measurement function for an empty function call.
-   returns time in nano-seconds upon success,
-   and -1 upon failure.
-   Zero iterations number is invalid.
-   */
 double osm_function_time(unsigned int osm_iterations)
 {
     if (osm_iterations == 0)
@@ -86,13 +102,6 @@ double osm_function_time(unsigned int osm_iterations)
     return timeDiffInNano(start, end, osm_iterations);
 }
 
-
-/* Time measurement function for an empty trap into the operating system.
-   returns time in nano-seconds upon success,
-   and -1 upon failure.
-   Zero iterations number is invalid.
-
-   */
 double osm_syscall_time(unsigned int osm_iterations)
 {
     if (osm_iterations == 0)
@@ -125,26 +134,6 @@ double osm_syscall_time(unsigned int osm_iterations)
     return timeDiffInNano(start, end, osm_iterations);
 }
 
-/*
-    @brief Calculate average time of the operations
-    @param tv1 start
-    @param tv2 end
-    @return tv2 - tv1 in nanoseconds.
-*/
-double timeDiffInNano(timeval tv1, timeval tv2, unsigned int iterations)
-{
-    double secondsDiff = (tv2.tv_sec - tv1.tv_sec);
-    double microDiff = (tv2.tv_usec - tv1.tv_usec);
-    double nanoDiff = (secondsDiff*SECONDS_TO_NANO) + (microDiff*MICROSECONDS_TO_NANO);
-    return nanoDiff / iterations;
-}
-
-
-/* Time measurement function for a simple arithmetic operation.
-   returns time in nano-seconds upon success,
-   and -1 upon failure.
-   Zero iterations number is invalid.
-   */
 double osm_operation_time(unsigned int osm_iterations)
 {
     if (osm_iterations == 0)
@@ -179,17 +168,7 @@ double osm_operation_time(unsigned int osm_iterations)
 
     return timeDiffInNano(start, end, osm_iterations);
 }
-/*
-typedef struct {
-	char machineName[HOST_NAME_MAX];
-	int numberOfIterations;
-	double instructionTimeNanoSecond;
-	double functionTimeNanoSecond;
-	double trapTimeNanoSecond;
-	double functionInstructionRatio;
-	double trapInstructionRatio;
-} timeMeasurmentStructure;
-*/
+
 timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
 {
     timeMeasurmentStructure result = {{0}};
@@ -205,6 +184,4 @@ timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
     result.trapInstructionRatio = result.trapTimeNanoSecond / result.instructionTimeNanoSecond;
 
     return result;
-
-
 }
