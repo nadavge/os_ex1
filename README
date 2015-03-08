@@ -9,7 +9,7 @@ REMARKS:
 ANSWERS:
 
 =================
-Question 1.
+Task 1
 =================
 First, it creates a directory in the same folder called "os", with 0755 permissions.
 Then, it creates a subfolder in "os" called "2015".
@@ -21,3 +21,20 @@ We allocate 2^16 bytes of memory. We write to the file a lot of spaces (110), th
 It then de-allocates the memory allocated, and deletes the file and all directories created.
 (os/2015/info, os/2015/, os/),
 and then calls exit with status 0 (success).
+
+=================
+Task 2
+=================
+1. 
+	(i)
+	On applications depending on very accurate time-specific events (real-time systems), interrupts
+	that occur during this situations cause the program instructions to be postponed, and thus 
+	might create unwanted results. If we sample a signal at a given frequency, even few nanoseconds
+	of delay might change the results.
+	(ii)
+	ADD
+2.
+	It might solve some problem, but it might cause much more.
+	Interrupts are there because some events are urgent and need to be handled immediately.
+	If such a solution is chosen, it must be applied on a very specific, critical and
+		low time-consuming instructions sets, and only as a last resort.
