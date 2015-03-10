@@ -166,7 +166,7 @@ double osm_operation_time(unsigned int osm_iterations)
     timeval end = getTime();
 
 	// It is used here to require a to be calculated and not removed on optimization
-	int b = a;
+    int b = a;
 
     return timeDiffInNano(start, end, osm_iterations);
 }
