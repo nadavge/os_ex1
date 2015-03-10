@@ -33,7 +33,7 @@ inline unsigned int roundUp(unsigned int num, unsigned int base)
 * @param tv2 the second timevalue
 * @param iterations the number of iterations to average on
 *
-* @return the average iteration time on success, -1 if timevalues invalid
+* @return the average iteration time in nanoseconds
 */
 double timeDiffInNano(timeval tv1, timeval tv2, unsigned int iterations)
 {
