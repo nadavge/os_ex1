@@ -13,8 +13,9 @@ Task 1
 =================
 First, it creates a directory in the same folder called "os", with 0755 permissions.
 Then, it creates a subfolder in "os" called "2015".
-Then, it opens a handler to a file "info" with permissions to write only, if it doesn't exist it creates it,
-and truncates it if it exists ("w"), and receives a file descriptor from the OS.
+Then, it opens a handler to a file "info" with permissions to write only,
+if it doesn't exist it creates it, and truncates it if it does exist ("w"),
+lastly receiving its file descriptor from the OS.
 It then calls fstat with the given file descriptor, as a regular file with 0644 permissions. it's empty.
 We allocate 2^16 bytes of memory. We write to the file a lot of spaces (110), then the username
 	of the current logged in user, and then the parameter given to the program.
@@ -29,12 +30,14 @@ Task 2
 	(i)
 	On applications depending on very accurate time-specific events (real-time systems), interrupts
 	that occur during this situations cause the program instructions to be postponed, and thus 
-	might create unwanted results. If we sample a signal at a given frequency, even few nanoseconds
-	of delay might change the results.
+	might create unwanted results. If we sample a very quickly changing signal at a given frequency,
+	even few nanoseconds of delay might change the results significantly missing changes in the signal
 	(ii)
-	ADD
+	Supposing a process works on a certain file, then an interrupt is called and tries to edit the
+	file aswell we might run into unexpected behaviour where when we return to the first process
+	the file is different from its version before the interrupt
 2.
 	It might solve some problem, but it might cause much more.
 	Interrupts are there because some events are urgent and need to be handled immediately.
 	If such a solution is chosen, it must be applied on a very specific, critical and
-		low time-consuming instructions sets, and only as a last resort.
+	low time-consuming instructions sets, and only as a last resort.
