@@ -146,25 +146,28 @@ double osm_operation_time(unsigned int osm_iterations)
 
     timeval start = getTime();
 
-    register /*volatile*/ int a = 1337;
+    register int a = 1337;
 
     while(iterations_left > 0)
     {
-	a += 1;
-	a -= 1;
-	a += 1;
-	a -= 1;
-	a += 1;
-	a -= 1;
-	a += 1;
-	a -= 1;
-	a += 1;
-	a -= 1;
+	a += a;
+	a += a;
+	a += a;
+	a += a;
+	a += a;
+	a += a;
+	a += a;
+	a += a;
+	a += a;
+	a += a;
 
 	iterations_left -= REPETITIONS;
     }
 
     timeval end = getTime();
+
+	// It is used here to require a to be calculated and not removed on optimization
+	int b = a;
 
     return timeDiffInNano(start, end, osm_iterations);
 }
