@@ -7,6 +7,7 @@
 #define MICROSECONDS_TO_NANO 1000
 #define SECONDS_TO_NANO 1000000000
 #define REPETITIONS 10
+#define GET_TIME(tv) if(gettimeofday(&tv) == -1) return -1
 
 typedef struct timeval timeval;
 
@@ -32,7 +33,7 @@ inline unsigned int roundUp(unsigned int num, unsigned int base)
 * @param tv2 the second timevalue
 * @param iterations the number of iterations to average on
 *
-* @return the average iteration time
+* @return the average iteration time on success, -1 if timevalues invalid
 */
 double timeDiffInNano(timeval tv1, timeval tv2, unsigned int iterations)
 {
@@ -76,10 +77,14 @@ double osm_function_time(unsigned int osm_iterations)
         return -1;
     }
 
+    timeval start = {0};
+    timeval end = {0};
+    
     osm_iterations = roundUp(osm_iterations, REPETITIONS);
     unsigned iterations_left = osm_iterations;
 
-    timeval start = getTime();
+    GET_TIME(start);
+
     while(iterations_left > 0)
     {
         emptyFunction();
@@ -96,7 +101,7 @@ double osm_function_time(unsigned int osm_iterations)
 	iterations_left -= REPETITIONS;
     }
 
-    timeval end = getTime();
+    GET_TIME(end);
 
     return timeDiffInNano(start, end, osm_iterations);
 }
@@ -108,10 +113,13 @@ double osm_syscall_time(unsigned int osm_iterations)
         return -1;
     }
 
+    timeval start = {0};
+    timeval end = {0};
+
     osm_iterations = roundUp(osm_iterations, REPETITIONS);
     unsigned iterations_left = osm_iterations;
 
-    timeval start = getTime();
+    GET_TIME(start);
     while(iterations_left > 0)
     {
         OSM_NULLSYSCALL;
@@ -128,7 +136,7 @@ double osm_syscall_time(unsigned int osm_iterations)
         iterations_left -= REPETITIONS;
     }
 
-    timeval end = getTime();
+    GET_TIME(end);
 
     return timeDiffInNano(start, end, osm_iterations);
 }
@@ -139,14 +147,15 @@ double osm_operation_time(unsigned int osm_iterations)
     {
         return -1;
     }
+    
+    timeval start = {0};
+    timeval end = {0};
 
     osm_iterations = roundUp(osm_iterations, REPETITIONS);
     unsigned iterations_left = osm_iterations;
-
-    timeval start = getTime();
-
     register int a = 1337;
 
+    GET_TIME(start);
     while(iterations_left > 0)
     {
 	a += a;
@@ -163,7 +172,7 @@ double osm_operation_time(unsigned int osm_iterations)
 	iterations_left -= REPETITIONS;
     }
 
-    timeval end = getTime();
+    GET_TIME(end);
 
 	// It is used here to require a to be calculated and not removed on optimization
     int b = a;
