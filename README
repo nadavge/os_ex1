@@ -41,3 +41,5 @@ Task 2
 	Interrupts are there because some events are urgent and need to be handled immediately.
 	If such a solution is chosen, it must be applied on a very specific, critical and
 	low time-consuming instructions sets, and only as a last resort.
+	Since exceptions are also handled using interrupts, blocking interrupts might also
+	lead to blockage of runtime critical exceptions!
