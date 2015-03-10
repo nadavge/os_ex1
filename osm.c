@@ -43,17 +43,6 @@ double timeDiffInNano(timeval tv1, timeval tv2, unsigned int iterations)
     return nanoDiff/iterations;
 }
 
-/*
-*    @brief returns a timeval struct of the current time
-*    @return current timeval
-*/
-inline timeval getTime()
-{
-    timeval tv;
-    gettimeofday(&tv, NULL);
-    return tv;
-}
-
 /* Initialization function that the user must call
  * before running any other library function.
  * Returns 0 upon success and -1 on failure.
