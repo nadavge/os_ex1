@@ -9,7 +9,6 @@
 #define REPETITIONS 10
 
 typedef struct timeval timeval;
-volatile int tempCounter = 1337;
 
 /**
 * @brief Rounds up a number to be a multiple of another number
@@ -175,7 +174,7 @@ double osm_operation_time(unsigned int osm_iterations)
 timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
 {
     timeMeasurmentStructure result = {{0}};
-    if(! gethostname(result.machineName, HOST_NAME_MAX))
+    if(!gethostname(result.machineName, HOST_NAME_MAX))
     {
         result.machineName[0] = 0;
     }
