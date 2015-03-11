@@ -5,6 +5,10 @@ FILES:
 osm.c -- The implementation of question 3
 
 REMARKS:
+In task 3 we considered some options on how to handle returning error code in case the 
+time-getting function fails.
+We eventualy did it as a MACRO to avoid code repetition, even though we know we could've just "copy-pasted" the
+code on each function. In our opinion this seemed less elegant, so we picked the MACRO.
 
 ANSWERS:
 
@@ -43,11 +47,3 @@ Task 2
 	low time-consuming instructions sets, and only as a last resort.
 	Since exceptions are also handled using interrupts, blocking interrupts might also
 	lead to blockage of runtime critical exceptions!
-
-
-=================
-Task 3
-=================
-Note: We considered some options on how to handle returning error code in case the time-getting function fails.
-We eventualy did it as a MACRO to avoid code repeatetion, but we also know we could've just "copy-paste" the
-code on each function.
