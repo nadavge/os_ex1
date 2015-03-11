@@ -3,6 +3,7 @@ nadavg, ddanon
 
 FILES:
 osm.c -- The implementation of question 3
+makefile -- The make file for the library
 
 REMARKS:
 In task 3 we considered some options on how to handle returning error code in case the 
