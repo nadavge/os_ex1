@@ -1,5 +1,6 @@
 nadavg, ddanon
 206338865, 313364861
+EX: 1
 
 FILES:
 osm.c -- The implementation of question 3
