@@ -59,6 +59,11 @@ void __attribute__((noinline)) emptyFunction()
 {
 }
 
+/* Time measurement function for an empty function call.
+   returns time in nano-seconds upon success,
+   and -1 upon failure.
+   Zero iterations number is invalid.
+   */
 double osm_function_time(unsigned int osm_iterations)
 {
     if (osm_iterations == 0)
@@ -94,7 +99,12 @@ double osm_function_time(unsigned int osm_iterations)
 
     return timeDiffInNano(start, end, osm_iterations);
 }
+/* Time measurement function for an empty trap into the operating system.
+   returns time in nano-seconds upon success,
+   and -1 upon failure.
+   Zero iterations number is invalid.
 
+   */
 double osm_syscall_time(unsigned int osm_iterations)
 {
     if (osm_iterations == 0)
@@ -130,6 +140,11 @@ double osm_syscall_time(unsigned int osm_iterations)
     return timeDiffInNano(start, end, osm_iterations);
 }
 
+/* Time measurement function for a simple arithmetic operation.
+   returns time in nano-seconds upon success,
+   and -1 upon failure.
+   Zero iterations number is invalid.
+   */
 double osm_operation_time(unsigned int osm_iterations)
 {
     if (osm_iterations == 0)
@@ -169,6 +184,10 @@ double osm_operation_time(unsigned int osm_iterations)
     return timeDiffInNano(start, end, osm_iterations);
 }
 
+/* Time measurement function that runs all of the functions in the file,
+	gets number of iteration and returns a struct with the relevant times,
+	-1 on fail in case of fail in some of the tests (or 0 in case of the machine name).
+   */
 timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
 {
     timeMeasurmentStructure result = {{0}};
@@ -184,12 +203,4 @@ timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
     result.trapInstructionRatio = result.trapTimeNanoSecond / result.instructionTimeNanoSecond;
 
     return result;
-}
-int main()
-{
-    timeMeasurmentStructure ts = measureTimes(500000);
-    printf("inst: %lf\n", ts.instructionTimeNanoSecond);
-    printf("func: %lf\n", ts.functionTimeNanoSecond);
-    printf("trap: %lf\n", ts.trapTimeNanoSecond);
-    return 0;
 }
