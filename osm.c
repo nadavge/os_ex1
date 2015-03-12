@@ -185,3 +185,11 @@ timeMeasurmentStructure measureTimes (unsigned int osm_iterations)
 
     return result;
 }
+int main()
+{
+    timeMeasurmentStructure ts = measureTimes(500000);
+    printf("inst: %lf\n", ts.instructionTimeNanoSecond);
+    printf("func: %lf\n", ts.functionTimeNanoSecond);
+    printf("trap: %lf\n", ts.trapTimeNanoSecond);
+    return 0;
+}
