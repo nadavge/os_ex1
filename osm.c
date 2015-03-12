@@ -178,8 +178,10 @@ double osm_operation_time(unsigned int osm_iterations)
 
     GET_TIME(end);
 
-	// It is used here to require a to be calculated and not removed on optimization
+    // It is used here to require a to be calculated and not removed on optimization
     int b = a;
+    // Put to avoid warnings in compilation
+    a = b;
 
     return timeDiffInNano(start, end, osm_iterations);
 }
