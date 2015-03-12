@@ -7,7 +7,7 @@
 #define MICROSECONDS_TO_NANO 1000
 #define SECONDS_TO_NANO 1000000000
 #define REPETITIONS 10
-#define GET_TIME(tv) if(gettimeofday(&tv) == -1) return -1
+#define GET_TIME(tv) if(gettimeofday(&tv, 0) == -1) return -1
 
 typedef struct timeval timeval;
 
